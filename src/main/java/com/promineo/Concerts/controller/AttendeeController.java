@@ -23,11 +23,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AttendeeController {
     @Autowired
-     private AttendeeService attendeeService; 
+    private AttendeeService attendeeService; 
      
+    @Autowired
     public AttendeeController(AttendeeService attendeeService) {
     	super(); 
     	this.attendeeService = attendeeService; 
+    }
+    
+    @GetMapping
+    public List<Attendee> getAttendee(Attendee attendee){
+	return List.of(attendee); 
     }
     
     //Create Attendee API
