@@ -2,6 +2,8 @@ package com.promineo.Concerts.controller;
 
 import java.util.List;
 
+import com.promineo.Concerts.repository.AttendeeRepository;
+import com.promineo.Concerts.service.implementation.AttendeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.promineo.Concerts.entity.Attendee;
-import com.promineo.Concerts.service.implementation.AttendeeService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,11 +31,12 @@ public class AttendeeController {
     	super(); 
     	this.attendeeService = attendeeService; 
     }
-    
-    @GetMapping
-    public List<Attendee> getAttendee(Attendee attendee){
-	return List.of(attendee); 
-    }
+  
+   //Gets the list of Attendees
+  @GetMapping
+  public ResponseEntity<List<Attendee>> getAttendee(){
+      return  new ResponseEntity<>(attendeeService.getAttendee(),HttpStatus.OK); 
+  }
     
     //Create Attendee API
     @PostMapping
