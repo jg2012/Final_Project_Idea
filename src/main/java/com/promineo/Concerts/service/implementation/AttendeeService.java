@@ -14,7 +14,7 @@ public interface AttendeeService {
 
     public String deleteAttendee(int id);
 
-    public Attendee updateAttendee(int id, Attendee atatendee);
+    public Attendee updateAttendee(int id, Attendee attendee);
 
 
 
