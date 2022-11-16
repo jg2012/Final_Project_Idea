@@ -18,20 +18,31 @@ public class VenueServiceImp implements VenueService {
 
     @Override
     public Venue saveVenue(Venue venue) {
-return null;     }
+return venueRepository.save(venue);
+    }
 
     @Override
     public List<Venue> getVenue() {
-        return null;
+        return venueRepository.findAll();
     }
 
     @Override
     public String deleteVenue(int id) {
-        return null;
+
+        venueRepository.deleteById(id);
+        return "Delete venue with id:" + id;
     }
 
     @Override
     public Venue updateVenue(int id, Venue venue) {
-        return null;
+
+        venue.setVenue_name(venue.getVenue_name());
+        venue.setVenue_city(venue.getVenue_city());
+        venue.setVenue_state(venue.getVenue_state());
+
+
+
+
+        return venueRepository.save(venue);
     }
 }
