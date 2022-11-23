@@ -1,52 +1,50 @@
 package com.promineo.Concerts.controller;
 
-import java.util.Collection;
-
+import com.promineo.Concerts.entity.Attendee;
 import com.promineo.Concerts.service.implementation.AttendeeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.promineo.Concerts.entity.Attendee;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
 
 
 @RestController
-@RequestMapping("/Concert/Attendee")
+@RequestMapping("concert_attendee")
 @Slf4j
 public class AttendeeController {
     @Autowired
-    private AttendeeService attendeeService; 
-     
+    private AttendeeService attendeeService;
+
     @Autowired
     public AttendeeController(AttendeeService attendeeService) {
-    	super(); 
-    	this.attendeeService = attendeeService; 
+        super();
+        this.attendeeService = attendeeService;
     }
-  
-   //Gets the list of Attendees
-  @GetMapping
-  public Collection<Attendee> getAttendee(){
-      return  attendeeService.getAttendee();
-  }
-    
+
+    //Gets the list of Attendees
+    @GetMapping("concert_attendee")
+    public List<Attendee> getAttendee() {
+        return attendeeService.getAttendee();
+    }
+
     //Create Attendee API
-    @PostMapping("/Attendee")
-    public ResponseEntity<Attendee> saveAttendee(@RequestBody Attendee attendee){ 
-	return new ResponseEntity<Attendee>(attendeeService.saveAttendee(attendee), HttpStatus.CREATED);
+    @PostMapping("/concert_attendee/{id}")
+    public ResponseEntity<Attendee> saveAttendee(@RequestBody Attendee attendee) {
+        return new ResponseEntity<>(attendeeService.saveAttendee(attendee), HttpStatus.CREATED);
     }
 
     //Deletes Attendee by ID API
-    @DeleteMapping("/Attendee/{id}")
-    public String deleteAttendee(@PathVariable int id){
+    @DeleteMapping("/concert_attendee/{id}")
+    public String deleteAttendee(@PathVariable int id) {
         return attendeeService.deleteAttendee(id);
     }
 
-    @PutMapping
-    public Attendee updateAttendee (@RequestBody Attendee attendee, @PathVariable int id){
-        return attendeeService.updateAttendee(id, attendee); 
+    @PutMapping("concert_attendee/{id}")
+    public Attendee updateAttendee(@RequestBody Attendee attendee, @PathVariable int id) {
+        return attendeeService.updateAttendee(id, attendee);
     }
-    
+
 }

@@ -2,33 +2,33 @@ package com.promineo.Concerts.entity;
 
 import lombok.Data;
 import org.springframework.data.relational.core.mapping.Column;
+
 import javax.persistence.*;
+import java.util.Date;
+
 
 @Data
 @Entity
-@Table(name ="Concert")
+@Table(name = "concert")
 public class Concert {
-    
+
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private int concert_pk;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int concert_id;
 
-    @Column(value = "musical_artist")
-    private String musical_artist;
+    @Column("concert_date")
+    private Date concert_date;
 
-    @Column(value = "concert_data")
-    private String concert_date;
+    @Column("concert_musical_artist")
+    private String concert_musical_artist;
 
-    @Column(value = "convert_venue")
-    private String concert_venue;
+    @Column("concert_venue_name")
+    private String concert_venue_name;
 
-    @Column(value = "concert_city")
+    @Column("concert_city")
     private String concert_city;
 
-   @Column(value = "concert_state")
+    @Column("concert_city")
     private String concert_state;
-
-    @Column(value = "concert_attendee")
-    private String concert_attendee;
 
 }

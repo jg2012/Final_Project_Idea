@@ -5,13 +5,12 @@ import com.promineo.Concerts.entity.Venue;
 import java.util.List;
 
 public interface VenueService {
+    Venue saveVenue(Venue venue);
 
-    public Venue saveVenue(Venue venue);
+     List<Venue> getVenue();
 
-    public List<Venue> getVenue();
+     String deleteVenue(int id);
 
-    public String deleteVenue(int id);
-
-    public Venue updateVenue(int id, Venue venue);
+     Venue updateVenue(int id, Venue venue);
 
 }

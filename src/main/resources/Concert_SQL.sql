@@ -1,90 +1,121 @@
-DROP TABLE IF EXISTS Attendee_has_Concert;
-DROP TABLE IF EXISTS Attendee_has_Venue;
-DROP TABLE IF EXISTS Venue;
-DROP TABLE IF EXISTS Concert;
-DROP TABLE IF EXISTS Attendee;
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 
-CREATE TABLE IF NOT EXISTS `Concerts`.`Attendee` (
-  `attendee_pk` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `attendee_first_name` VARCHAR(45) NOT NULL,
-  `attendee_last_name` VARCHAR(45) NOT NULL,
-  `attendee_city` VARCHAR(45) NOT NULL,
-  `attendee_state` VARCHAR(45) NOT NULL,
-  `concert_attendance` VARCHAR(45),
-  PRIMARY KEY (`attendee_pk`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+-- -----------------------------------------------------
+-- Schema Concerts
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `Concerts` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `Concerts` ;
 
-CREATE TABLE IF NOT EXISTS `Concerts`.`Concert` (
-  `concert_pk` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `musical_artist` VARCHAR(45) NOT NULL,
-  `concert_date` VARCHAR(45) NOT NULL,
-  `concert_venue` VARCHAR(45) NOT NULL,
-  `concert_city` VARCHAR(45) NOT NULL,
-  `concert_state` VARCHAR(45) NOT NULL,
-  `concert_attendee` VARCHAR(45),
-  PRIMARY KEY (`concert_pk`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-CREATE TABLE IF NOT EXISTS `Concerts`.`Venue` (
-  `venue_pk` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `venue_name` VARCHAR(50) NOT NULL,
-  `venue_city` VARCHAR(45) NOT NULL,
-  `venue_state` VARCHAR(45) NOT NULL,
-  `Concert_concert_pk` INT UNSIGNED ,
-  PRIMARY KEY (`venue_pk`),
-  INDEX `fk_Venue_Concert_idx` (`Concert_concert_pk` ASC) VISIBLE,
-  CONSTRAINT `fk_Venue_Concert`
-    FOREIGN KEY (`Concert_concert_pk`)
-    REFERENCES `Concerts`.`Concert` (`concert_pk`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-CREATE TABLE IF NOT EXISTS `Concerts`.`Attendee_has_Concert` (
-  `Attendee_attendee_pk` INT UNSIGNED NOT NULL,
-  `Concert_concert_pk` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`Attendee_attendee_pk`, `Concert_concert_pk`),
-  INDEX `fk_Attendee_has_Concert_Concert1_idx` (`Concert_concert_pk` ASC) VISIBLE,
-  INDEX `fk_Attendee_has_Concert_Attendee1_idx` (`Attendee_attendee_pk` ASC) VISIBLE,
-  CONSTRAINT `fk_Attendee_has_Concert_Attendee1`
-    FOREIGN KEY (`Attendee_attendee_pk`)
-    REFERENCES `Concerts`.`Attendee` (`attendee_pk`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Attendee_has_Concert_Concert1`
-    FOREIGN KEY (`Concert_concert_pk`)
-    REFERENCES `Concerts`.`Concert` (`concert_pk`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-CREATE TABLE IF NOT EXISTS `Concerts`.`Attendee_has_Venue` (
-  `Attendee_attendee_pk` INT UNSIGNED NOT NULL,
-  `Venue_venue_pk` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`Attendee_attendee_pk`, `Venue_venue_pk`),
-  INDEX `fk_Attendee_has_Venue_Venue1_idx` (`Venue_venue_pk` ASC) VISIBLE,
-  INDEX `fk_Attendee_has_Venue_Attendee1_idx` (`Attendee_attendee_pk` ASC) VISIBLE,
-  CONSTRAINT `fk_Attendee_has_Venue_Attendee1`
-    FOREIGN KEY (`Attendee_attendee_pk`)
-    REFERENCES `Concerts`.`Attendee` (`attendee_pk`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Attendee_has_Venue_Venue1`
-    FOREIGN KEY (`Venue_venue_pk`)
-    REFERENCES `Concerts`.`Venue` (`venue_pk`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+-- -----------------------------------------------------
+-- Table `Concerts`.`concert`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Concerts`.`concert` (
+                                                    `concert_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                                    `concert_date` DATE NOT NULL,
+                                                    `concert_musical_artist` VARCHAR(45) NOT NULL,
+                                                    `concert_venue_name` VARCHAR(45) NOT NULL,
+                                                    `concert_city` VARCHAR(40) NOT NULL,
+                                                    `concert_state` VARCHAR(40) NOT NULL,
+                                                    PRIMARY KEY (`concert_id`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
 
 
+-- -----------------------------------------------------
+-- Table `Concerts`.`concert_attendee`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Concerts`.`concert_attendee` (
+                                                             `concert_attendee_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                                             `concert_attendee_first_name` VARCHAR(45) NOT NULL,
+                                                             `concert_attendee_last_name` VARCHAR(45) NOT NULL,
+                                                             `concert_musical_artist` VARCHAR(45) NOT NULL,
+                                                             `concert_venue_name` VARCHAR(45) NOT NULL,
+                                                             `concert_city` VARCHAR(40) NOT NULL,
+                                                             `concert_state` VARCHAR(40) NOT NULL,
+                                                             `concert_date` DATE NOT NULL,
+                                                             PRIMARY KEY (`concert_attendee_id`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `Concerts`.`concert_attendance`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Concerts`.`concert_attendance` (
+                                                               `concert_attendance_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                                               `concert_attendance_fk` INT UNSIGNED NOT NULL,
+                                                               `concerts_fk` INT UNSIGNED NOT NULL,
+                                                               PRIMARY KEY (`concert_attendance_id`),
+                                                               INDEX `concert_fk_idx` (`concerts_fk` ASC) VISIBLE,
+                                                               INDEX `concert_attendance_fk_idx` (`concert_attendance_fk` ASC) VISIBLE,
+                                                               CONSTRAINT `concert_attendance_fk`
+                                                                   FOREIGN KEY (`concert_attendance_fk`)
+                                                                       REFERENCES `Concerts`.`concert_attendee` (`concert_attendee_id`)
+                                                                       ON DELETE CASCADE
+                                                                       ON UPDATE CASCADE,
+                                                               CONSTRAINT `concerts_fk`
+                                                                   FOREIGN KEY (`concerts_fk`)
+                                                                       REFERENCES `Concerts`.`concert` (`concert_id`)
+                                                                       ON DELETE CASCADE
+                                                                       ON UPDATE CASCADE)
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `Concerts`.`concert_venue`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Concerts`.`concert_venue` (
+                                                          `concert_venue_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                                          `concert_venue_name` VARCHAR(50) NOT NULL,
+                                                          `concert_venue_city` VARCHAR(45) NOT NULL,
+                                                          `concert_venue_state` VARCHAR(45) NOT NULL,
+                                                          PRIMARY KEY (`concert_venue_id`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `Concerts`.`concert_event`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Concerts`.`concert_event` (
+                                                          `concert_event_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                                          `concert_venue_fk` INT UNSIGNED NOT NULL,
+                                                          `concert_fk` INT UNSIGNED NOT NULL,
+                                                          `concert_attendee_fk` INT UNSIGNED NOT NULL,
+                                                          PRIMARY KEY (`concert_event_id`),
+                                                          INDEX `concert_venue_fk_idx` (`concert_venue_fk` ASC) VISIBLE,
+                                                          INDEX `concert_fk_idx` (`concert_fk` ASC) VISIBLE,
+                                                          INDEX `concert_attendee_fk_idx` (`concert_attendee_fk` ASC) VISIBLE,
+                                                          CONSTRAINT `concert_venue_fk`
+                                                              FOREIGN KEY (`concert_venue_fk`)
+                                                                  REFERENCES `Concerts`.`concert_venue` (`concert_venue_id`)
+                                                                  ON DELETE CASCADE
+                                                                  ON UPDATE CASCADE,
+                                                          CONSTRAINT `concert_fk`
+                                                              FOREIGN KEY (`concert_fk`)
+                                                                  REFERENCES `Concerts`.`concert` (`concert_id`)
+                                                                  ON DELETE CASCADE
+                                                                  ON UPDATE CASCADE,
+                                                          CONSTRAINT `concert_attendee_fk`
+                                                              FOREIGN KEY (`concert_attendee_fk`)
+                                                                  REFERENCES `Concerts`.`concert_attendee` (`concert_attendee_id`)
+                                                                  ON DELETE CASCADE
+                                                                  ON UPDATE CASCADE)
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

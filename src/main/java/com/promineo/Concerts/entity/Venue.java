@@ -1,29 +1,26 @@
 package com.promineo.Concerts.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-
+import lombok.Data;
 import org.springframework.data.relational.core.mapping.Column;
 
-import lombok.Data;
+import javax.persistence.*;
+
 @Data
 @Entity
-@Table(name = "Venue")
-public class Venue{
+@Table(name = "concert_venue")
+public class Venue {
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private int venue_pk;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int concert_venue_id;
 
-    @Column(value ="venue_name")
-    private String venue_name;
-    @Column(value ="venue_city")
-    private String venue_city;
-    @Column(value = "venue_state")
-    private String venue_state;
+    @Column(value = "concert_venue_name")
+    private String concert_venue_name;
+    @Column(value = "concert_venue_city")
+    private String concert_venue_city;
+    @Column(value = "concert_venue_state")
+    private String concert_venue_state;
+
+
 
 }

@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface ConcertService {
 
-    public Concert saveConcert(Concert concert);
+     Concert saveConcert(Concert concert);
 
-    public List<Concert> getConcert();
+    List<Concert> getConcert();
 
-    public String deleteConcert(int id);
+    String deleteConcert(int id);
 
-    public Concert updateConcert(int id, Concert concert);
+     Concert updateConcert(int id, Concert concert);
 
 
 }

@@ -11,6 +11,7 @@ import java.util.List;
 public class VenueServiceImp implements VenueService {
 
     private final VenueRepository venueRepository;
+
     @Autowired
     public VenueServiceImp(VenueRepository venueRepository) {
         this.venueRepository = venueRepository;
@@ -18,7 +19,7 @@ public class VenueServiceImp implements VenueService {
 
     @Override
     public Venue saveVenue(Venue venue) {
-return venueRepository.save(venue);
+        return venueRepository.save(venue);
     }
 
     @Override
@@ -36,13 +37,9 @@ return venueRepository.save(venue);
     @Override
     public Venue updateVenue(int id, Venue venue) {
 
-        venue.setVenue_name(venue.getVenue_name());
-        venue.setVenue_city(venue.getVenue_city());
-        venue.setVenue_state(venue.getVenue_state());
-
-
-
-
+        venue.setConcert_venue_name(venue.getConcert_venue_name());
+        venue.setConcert_venue_city(venue.getConcert_venue_city());
+        venue.setConcert_venue_state(venue.getConcert_venue_state());
         return venueRepository.save(venue);
     }
 }

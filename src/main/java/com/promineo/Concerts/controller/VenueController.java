@@ -10,34 +10,37 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Concerts/Venue")
+@RequestMapping("Venue")
 public class VenueController {
 
     @Autowired
     private VenueService venueService;
 
     @Autowired
-    public VenueController(VenueService venueService){
+    public VenueController(VenueService venueService) {
         super();
         this.venueService = venueService;
     }
 
-    @GetMapping
-    public List<Venue> getVenue(){
+    @GetMapping("concert_venue")
+    public List<Venue> getVenue() {
         return venueService.getVenue();
     }
 
-    @PostMapping("/Venue")
-    public ResponseEntity<Venue> saveVenue(@RequestBody Venue venue){
-        return  new ResponseEntity<Venue>(venueService.saveVenue(venue), HttpStatus.CREATED);
+    @PostMapping("concert_venue")
+    public ResponseEntity<Venue> saveVenue(@RequestBody Venue venue) {
+        return new ResponseEntity<>(venueService.saveVenue(venue), HttpStatus.CREATED);
     }
 
-    @DeleteMapping ("/Venue/{id}")
-    public String deleteVenue(@PathVariable int id){
+    @DeleteMapping("/concert_venue/{id}")
+    public String deleteVenue(@PathVariable int id) {
         return venueService.deleteVenue(id);
     }
 
-
+    @PutMapping("concert_venue/{id}")
+    public Venue updateVenue(@RequestBody Venue venue, @PathVariable int id) {
+        return venueService.updateVenue(id, venue);
+    }
 
 
 }

@@ -20,28 +20,29 @@ public class ConcertController {
     private ConcertService concertService;
 
     @Autowired
-    public ConcertController(ConcertService concertService){
+    public ConcertController(ConcertService concertService) {
         super();
         this.concertService = concertService;
     }
 
     // Gets the list of Concerts
-    @GetMapping
-    public Collection<Concert> getConcert(){
+    @GetMapping("concerts")
+    public Collection<Concert> getConcert() {
         return concertService.getConcert();
     }
 
-    @PostMapping("/Concert")
-    public ResponseEntity<Concert> saveConcert(@RequestBody Concert concert){
-        return new ResponseEntity<Concert>(concertService.saveConcert(concert), HttpStatus.CREATED);
+    @PostMapping("concerts/")
+    public ResponseEntity<Concert> saveConcert(@RequestBody Concert concert) {
+        return new ResponseEntity<>(concertService.saveConcert(concert), HttpStatus.CREATED);
     }
-    @DeleteMapping("/Concert/{id}")
-   public String deleteConcert(@PathVariable int id){
-        return concertService.deleteConcert(id);
-   }
 
-   @PutMapping
-    public Concert updateConcert(@RequestBody Concert concert, @PathVariable int id){
+    @DeleteMapping("/concerts/{id}")
+    public String deleteConcert(@PathVariable int id) {
+        return concertService.deleteConcert(id);
+    }
+
+    @PutMapping("/concerts/{id}")
+    public Concert updateConcert(@RequestBody Concert concert, @PathVariable int id) {
         return concertService.updateConcert(id, concert);
-   }
+    }
 }

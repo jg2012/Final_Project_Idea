@@ -1,21 +1,19 @@
 package com.promineo.Concerts.service.implementation;
 
-import java.util.List;
-
 import com.promineo.Concerts.entity.Attendee;
-import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 
 public interface AttendeeService {
 
-    public Attendee saveAttendee(Attendee attendee);
-    
-    public List<Attendee> getAttendee();
+  Attendee saveAttendee(Attendee attendee);
 
-    public String deleteAttendee(int id);
+   List<Attendee> getAttendee();
 
-    public Attendee updateAttendee(int id, Attendee attendee);
+    String deleteAttendee(int id);
 
+    Attendee updateAttendee(int id, Attendee attendee);
 
 
 }
